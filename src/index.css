@@ -2,41 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* AI Video Dubber Design System - Dark theme with purple/blue gradients */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 224 71% 6%;
+    --card-foreground: 213 31% 91%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 224 71% 8%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 263 83% 57%;
+    --primary-foreground: 210 20% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 215 27% 17%;
+    --secondary-foreground: 213 31% 91%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 215 27% 17%;
+    --muted-foreground: 217 10% 64%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 210 20% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 215 27% 17%;
+    --input: 215 27% 17%;
+    --ring: 263 83% 57%;
 
-    --radius: 0.5rem;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    
+    /* AI-specific design tokens */
+    --ai-primary: 263 83% 57%;
+    --ai-secondary: 252 56% 57%;
+    --ai-glow: 263 83% 70%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--ai-primary)), hsl(var(--ai-secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ai-primary) / 0.8), hsl(var(--ai-secondary) / 0.6));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card) / 0.5), hsl(var(--card) / 0.3));
+    
+    /* Shadows and effects */
+    --shadow-glow: 0 0 40px hsl(var(--ai-glow) / 0.3);
+    --shadow-card: 0 8px 32px hsl(224 71% 4% / 0.4);
+    --shadow-upload: 0 20px 60px hsl(var(--ai-primary) / 0.2);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
