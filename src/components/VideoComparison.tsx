@@ -22,6 +22,36 @@ export function VideoComparison({
   const [includeSubtitles, setIncludeSubtitles] = useState(true);
   const [exportFormat, setExportFormat] = useState("1080p");
 
+  const handleDownloadVideo = () => {
+    // Create a mock video blob for demonstration
+    const blob = new Blob(['Mock dubbed video content'], { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `dubbed_${fileName.replace(/\.[^/.]+$/, '')}_${exportFormat}.mp4`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadTranscript = () => {
+    const transcriptContent = `Original Transcript (${sourceLanguage}):\n\n` +
+      originalTranscript.map(item => `${item.time}: ${item.text}`).join('\n') +
+      `\n\nTranslated Transcript (${targetLanguage}):\n\n` +
+      translatedTranscript.map(item => `${item.time}: ${item.text}`).join('\n');
+    
+    const blob = new Blob([transcriptContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `transcript_${fileName.replace(/\.[^/.]+$/, '')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   // Mock transcript data
   const originalTranscript = [
     { time: "00:00", text: "Hello everyone, welcome to today's presentation." },
@@ -63,12 +93,19 @@ export function VideoComparison({
             </div>
             
             <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted/20 to-muted/40">
-                <div className="text-center">
-                  <Play className="h-12 w-12 text-white/70 mx-auto mb-2" />
-                  <p className="text-white/70 text-sm">Original Video Preview</p>
+              <video 
+                className="w-full h-full object-cover"
+                controls
+                preload="metadata"
+              >
+                <source src={URL.createObjectURL(new File([], fileName, {type: 'video/mp4'}))} type="video/mp4" />
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted/20 to-muted/40">
+                  <div className="text-center">
+                    <Play className="h-12 w-12 text-white/70 mx-auto mb-2" />
+                    <p className="text-white/70 text-sm">Original Video Preview</p>
+                  </div>
                 </div>
-              </div>
+              </video>
             </div>
 
             <div className="flex items-center gap-4">
@@ -106,12 +143,19 @@ export function VideoComparison({
             </div>
             
             <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ai-primary/20 to-ai-secondary/40">
-                <div className="text-center">
-                  <Play className="h-12 w-12 text-white/70 mx-auto mb-2" />
-                  <p className="text-white/70 text-sm">Dubbed Video Preview</p>
+              <video 
+                className="w-full h-full object-cover"
+                controls
+                preload="metadata"
+              >
+                <source src={URL.createObjectURL(new File([], `dubbed_${fileName}`, {type: 'video/mp4'}))} type="video/mp4" />
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ai-primary/20 to-ai-secondary/40">
+                  <div className="text-center">
+                    <Play className="h-12 w-12 text-white/70 mx-auto mb-2" />
+                    <p className="text-white/70 text-sm">Dubbed Video Preview</p>
+                  </div>
                 </div>
-              </div>
+              </video>
             </div>
 
             <div className="flex items-center gap-4">
@@ -241,11 +285,11 @@ export function VideoComparison({
             </Button>
             
             <div className="flex gap-3">
-              <Button variant="glass">
+              <Button variant="glass" onClick={handleDownloadTranscript}>
                 <FileText className="h-4 w-4" />
                 Download Transcript
               </Button>
-              <Button variant="hero" size="lg">
+              <Button variant="hero" size="lg" onClick={handleDownloadVideo}>
                 <Download className="h-5 w-5" />
                 Download Video ({exportFormat})
               </Button>
